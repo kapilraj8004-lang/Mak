@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>System Breach</title>
+
+<style>
+
+body{
+margin:0;
+background:black;
+color:#00ff00;
+font-family:monospace;
+overflow:hidden;
+text-align:center;
+cursor:none;
+}
+
+#title{
+font-size:55px;
+color:red;
+margin-top:18%;
+animation:flicker 1s infinite;
+}
+
+@keyframes flicker{
+0%{opacity:1;}
+50%{opacity:0.3;}
+100%{opacity:1;}
+}
+
+.blood{
+position:absolute;
+top:0;
+width:100%;
+height:0;
+background:red;
+animation:drip 6s forwards;
+}
+
+@keyframes drip{
+from{height:0;}
+to{height:120px;}
+}
+
+.eye{
+position:absolute;
+font-size:40px;
+}
+
+#terminal{
+position:fixed;
+bottom:0;
+width:100%;
+height:200px;
+background:black;
+color:#00ff00;
+padding:10px;
+text-align:left;
+font-size:16px;
+}
+
+#ghost{
+position:absolute;
+top:30%;
+left:-200px;
+font-size:120px;
+animation:ghostmove 10s linear infinite;
+}
+
+@keyframes ghostmove{
+0%{left:-200px;}
+100%{left:120%;}
+}
+
+#virus{
+position:absolute;
+top:10%;
+width:100%;
+font-size:30px;
+color:red;
+display:none;
+animation:blink 0.5s infinite;
+}
+
+@keyframes blink{
+0%{opacity:1;}
+50%{opacity:0;}
+100%{opacity:1;}
+}
+
+.shake{
+animation:shake 0.1s infinite;
+}
+
+@keyframes shake{
+0%{transform:translate(2px,2px);}
+25%{transform:translate(-2px,-2px);}
+50%{transform:translate(2px,-2px);}
+75%{transform:translate(-2px,2px);}
+100%{transform:translate(2px,2px);}
+}
+
+#jumpscare{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+display:none;
+z-index:999;
+}
+
+#jumpscare img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+button{
+padding:15px 40px;
+font-size:22px;
+background:red;
+color:white;
+border:none;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="blood"></div>
+
+<div id="title">DO NOT ENTER</div>
+<br>
+<button onclick="start()">ENTER</button>
+
+<div id="virus">⚠ VIRUS DETECTED ⚠</div>
+
+<div id="eye1" class="eye">👁️</div>
+<div id="eye2" class="eye">👁️</div>
+
+<div id="ghost">👻</div>
+
+<div id="terminal"></div>
+
+<div id="jumpscare">
+<img src="https://i.imgur.com/Z7AzH2c.png">
+</div>
+
+<audio id="scream">
+<source src="https://www.myinstants.com/media/sounds/horror-scream.mp3">
+</audio>
+
+<audio id="whisper" loop>
+<source src="https://www.myinstants.com/media/sounds/creepy-whisper.mp3">
+</audio>
+
+<script>
+
+document.addEventListener("mousemove",function(e){
+
+eye1.style.left=e.pageX+30+"px";
+eye1.style.top=e.pageY+"px";
+
+eye2.style.left=e.pageX-30+"px";
+eye2.style.top=e.pageY+"px";
+
+});
+
+let terminalText=[
+"Initializing system...",
+"Accessing hidden directories...",
+"Scanning device memory...",
+"Connecting to unknown server...",
+"Downloading files...",
+"WARNING: Suspicious activity detected...",
+];
+
+let i=0;
+
+function start(){
+
+document.documentElement.requestFullscreen();
+
+whisper.play();
+
+let terminal=document.getElementById("terminal");
+
+let interval=setInterval(function(){
+
+if(i<terminalText.length){
+terminal.innerHTML+=terminalText[i]+"<br>";
+i++;
+}else{
+clearInterval(interval);
+}
+
+},1000);
+
+setTimeout(function(){
+
+document.getElementById("virus").style.display="block";
+
+},4000);
+
+setTimeout(function(){
+
+document.body.classList.add("shake");
+
+},6000);
+
+setTimeout(function(){
+
+document.getElementById("jumpscare").style.display="block";
+scream.play();
+
+},9000);
+
+}
+
+</script>
+
+</body>
+</html>
